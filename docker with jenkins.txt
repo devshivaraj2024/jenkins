@@ -1,0 +1,63 @@
+Install docker
+
+verify the docker
+
+run the sample hello world container
+
+https://medium.com/@srijaanaparthy/step-by-step-guide-to-install-docker-on-amazon-linux-machine-in-aws-a690bf44b5fe
+
+
+
+
+---------------
+Sample 
+
+https://blog.devops.dev/installation-of-jenkins-using-docker-compose-25009e11fb03
+
+docker-compose.yml file
+
+
+version: '3'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - 8080:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - /home/ubuntu/jenkins_compose/jenkins_configuration:/var/jenkins_home
+
+
+run docker-compose.yml file
+
+sudo docker-compose up -d 
+
+verify the logs
+
+sudo docker-compose logs --follow
+
+------------------
+
+docker with jenkins
+
+
+sample dockerfile
+
+
+FROM centos
+
+RUN useradd remote_user && \
+    echo "1234" | passwd remote_user  --stdin && \ # Passwd command is deprecated on centos:8
+    mkdir /home/remote_user/.ssh && \
+    chmod 700 /home/remote_user/.ssh
+
+to this:
+
+RUN useradd remote_user && \
+    echo "remote_user:1234" | chpasswd && \
+    mkdir /home/remote_user/.ssh && \
+    chmod 700 /home/remote_user/.ssh
